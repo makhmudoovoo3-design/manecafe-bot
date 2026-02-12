@@ -90,7 +90,7 @@ async def open_menu_options(message: types.Message):
         [
             InlineKeyboardButton(
                 text="🛍 Wolt orqali buyurtma", 
-                web_app=WebAppInfo(url=get_conf('wolt_url'))
+                url=get_conf('wolt_url')
             )
         ],
         [
@@ -100,8 +100,12 @@ async def open_menu_options(message: types.Message):
             )
         ]
     ])
-    await message.answer(f"Marhamat, menyuni ko'rish usulini tanlang:", reply_markup=url_kb)
-
+    await message.answer(
+        "Mane Cafe menyusi va yetkazib berish:\n\n"
+        "*(Wolt ilovasi bo'lsa, avtomatik ilovada ochiladi)*", 
+        reply_markup=url_kb,
+        parse_mode="Markdown"
+    )
 # --- ADMIN PANEL ---
 @dp.message(F.text == "⚙️ Admin Panel")
 @dp.message(Command("admin"))
@@ -156,3 +160,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
