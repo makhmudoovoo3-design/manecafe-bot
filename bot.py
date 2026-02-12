@@ -94,6 +94,9 @@ async def show_location(message: types.Message):
 # 2-tugma: Aloqa
 @dp.message(lambda message: message.text == get_conf('b2'))
 async def contact_us(message: types.Message):
+   # 2-tugma: Aloqa
+@dp.message(lambda message: message.text == get_conf('b2'))
+async def contact_us(message: types.Message):
     kb = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="💬 Admin bilan bog'lanish", url=get_conf('tg_admin'))]
     ])
@@ -184,3 +187,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
