@@ -8,7 +8,7 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 
 # --- ASOSIY SOZLAMALAR ---
-TOKEN = os.getenv("TOKEN", "8318944066:AAFbXNANLk42CmzWpte4vLXHWW-2AngC0Jk")
+TOKEN = os.getenv("TOKEN", "8318944066:AAFhjLk4HT3F5eCuzD-4dp-MN7-jDlROMZM")
 ADMIN_ID = 8135296587 
 
 bot = Bot(token=TOKEN)
@@ -183,3 +183,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
