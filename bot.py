@@ -8,9 +8,8 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 
 # --- ASOSIY SOZLAMALAR ---
-# Yangi tokeningiz joylandi
 TOKEN = os.getenv("TOKEN", "8318944066:AAFhjLk4HT3F5eCuzD-4dp-MN7-jDlROMZM")
-ADMIN_ID = 8135296587 
+ADMIN_ID = 8135296587
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
@@ -25,8 +24,8 @@ def init_db():
     defaults = [
         ('sayt_url', 'https://manecafe.uz/uz'),
         ('wolt_url', 'https://wolt.com/uz/uzb/tashkent/restaurant/mane-cafe-tash'),
-        ('tg_admin', 'https://t.me/mane_callcentre'), # To'g'ri admin manzili
-        ('maps_url', 'https://yandex.uz/maps/org/174532732165?si=av1r0pv5a5tux31bbrfr1wqc6g'), # Lokatsiya
+        ('tg_admin', 'https://t.me/mane_callcentre'),
+        ('maps_url', 'https://yandex.uz/maps/org/174532732165?si=av1r0pv5a5tux31bbrfr1wqc6g'),
         ('b1', '📍 Bizning manzillar'), 
         ('b2', '📞 Aloqa / Bron'),
         ('b3', '📸 MaNe Cafe (Video Menyu)'), 
@@ -54,12 +53,10 @@ def set_conf(key, value):
     conn.commit()
     conn.close()
 
-# --- HOLATLAR ---
 class AdminStates(StatesGroup):
     waiting_reklama = State()
     waiting_config_val = State()
 
-# --- KLAVIATURALAR ---
 def get_main_menu(user_id):
     kb = [
         [KeyboardButton(text=get_conf('b1')), KeyboardButton(text=get_conf('b2'))],
@@ -83,7 +80,6 @@ async def cmd_start(message: types.Message):
         reply_markup=get_main_menu(message.from_user.id)
     )
 
-# 1-tugma: Lokatsiya
 @dp.message(lambda message: message.text == get_conf('b1'))
 async def show_location(message: types.Message):
     kb = InlineKeyboardMarkup(inline_keyboard=[
@@ -91,10 +87,6 @@ async def show_location(message: types.Message):
     ])
     await message.answer("📍 Bizning manzillarimiz va ish vaqtimiz:\n\nDu-Yak: 08:00 - 22:00", reply_markup=kb)
 
-# 2-tugma: Aloqa
-@dp.message(lambda message: message.text == get_conf('b2'))
-async def contact_us(message: types.Message):
-   # 2-tugma: Aloqa
 @dp.message(lambda message: message.text == get_conf('b2'))
 async def contact_us(message: types.Message):
     kb = InlineKeyboardMarkup(inline_keyboard=[
@@ -102,7 +94,6 @@ async def contact_us(message: types.Message):
     ])
     await message.answer("Stol buyurtma qilish yoki savollaringiz bo'lsa, yozing:", reply_markup=kb)
 
-# 3-tugma: MaNe Cafe
 @dp.message(lambda message: message.text == get_conf('b3'))
 async def open_mane_site(message: types.Message):
     kb = InlineKeyboardMarkup(inline_keyboard=[
@@ -110,17 +101,14 @@ async def open_mane_site(message: types.Message):
     ])
     await message.answer("MaNe Cafe atmosferasi va video-menyusi bilan tanishing:", reply_markup=kb)
 
-# 4-tugma: Aksiyalar
 @dp.message(lambda message: message.text == get_conf('b4'))
 async def offers(message: types.Message):
     await message.answer("🎁 Hozirgi aksiyalarimiz:\n\n- Har seshanba barcha kofelar uchun 10% chegirma!")
 
-# 5-tugma: Fikrlar
 @dp.message(lambda message: message.text == get_conf('b5'))
 async def feedback(message: types.Message):
     await message.answer("Sizning fikringiz biz uchun muhim! Iltimos, takliflaringizni yozib qoldiring.")
 
-# 6-tugma: Wolt
 @dp.message(lambda message: message.text == get_conf('b6'))
 async def open_menu_options(message: types.Message):
     url_kb = InlineKeyboardMarkup(inline_keyboard=[
@@ -133,7 +121,6 @@ async def open_menu_options(message: types.Message):
         parse_mode="Markdown"
     )
 
-# --- ADMIN PANEL ---
 @dp.message(F.text == "⚙️ Admin Panel")
 @dp.message(Command("admin"))
 async def admin_main(message: types.Message):
@@ -187,4 +174,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-
