@@ -8,6 +8,7 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 
 # --- ASOSIY SOZLAMALAR ---
+# Yangi tokeningiz joylandi
 TOKEN = os.getenv("TOKEN", "8318944066:AAFhjLk4HT3F5eCuzD-4dp-MN7-jDlROMZM")
 ADMIN_ID = 8135296587 
 
@@ -24,8 +25,8 @@ def init_db():
     defaults = [
         ('sayt_url', 'https://manecafe.uz/uz'),
         ('wolt_url', 'https://wolt.com/uz/uzb/tashkent/restaurant/mane-cafe-tash'),
-        ('tg_admin', 'https://t.me/manecafe_admin'), # Admin manzili
-        ('maps_url', 'https://maps.google.com'), # Lokatsiya uchun
+        ('tg_admin', 'https://t.me/mane_callcentre'), # To'g'ri admin manzili
+        ('maps_url', 'https://yandex.uz/maps/org/174532732165?si=av1r0pv5a5tux31bbrfr1wqc6g'), # Lokatsiya
         ('b1', '📍 Bizning manzillar'), 
         ('b2', '📞 Aloqa / Bron'),
         ('b3', '📸 MaNe Cafe (Video Menyu)'), 
@@ -86,7 +87,7 @@ async def cmd_start(message: types.Message):
 @dp.message(lambda message: message.text == get_conf('b1'))
 async def show_location(message: types.Message):
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="📍 Google Maps orqali ko'rish", url=get_conf('https://yandex.uz/maps/org/174532732165?si=av1r0pv5a5tux31bbrfr1wqc6g'))]
+        [InlineKeyboardButton(text="📍 Xaritada ko'rish", url=get_conf('maps_url'))]
     ])
     await message.answer("📍 Bizning manzillarimiz va ish vaqtimiz:\n\nDu-Yak: 08:00 - 22:00", reply_markup=kb)
 
@@ -94,11 +95,11 @@ async def show_location(message: types.Message):
 @dp.message(lambda message: message.text == get_conf('b2'))
 async def contact_us(message: types.Message):
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="💬 Admin bilan bog'lanish", url=get_conf('@mane_callcentre'))]
+        [InlineKeyboardButton(text="💬 Admin bilan bog'lanish", url=get_conf('tg_admin'))]
     ])
     await message.answer("Stol buyurtma qilish yoki savollaringiz bo'lsa, yozing:", reply_markup=kb)
 
-# 3-tugma: MaNe Cafe (Siz aytgan Video-Menyu sayti)
+# 3-tugma: MaNe Cafe
 @dp.message(lambda message: message.text == get_conf('b3'))
 async def open_mane_site(message: types.Message):
     kb = InlineKeyboardMarkup(inline_keyboard=[
@@ -138,7 +139,7 @@ async def admin_main(message: types.Message):
         [InlineKeyboardButton(text="📢 Reklama", callback_data="adm_reklama")],
         [InlineKeyboardButton(text="🛍 Wolt linki", callback_data="conf_wolt_url")],
         [InlineKeyboardButton(text="🌐 Sayt linki", callback_data="conf_sayt_url")],
-        [InlineKeyboardButton(text="✏️ Tugma nomlari", callback_data="adm_edit_btns")]
+        [InlineKeyboardButton(text="✏️ Tugmalar", callback_data="adm_edit_btns")]
     ])
     await message.answer("Admin paneli:", reply_markup=kb)
 
@@ -183,4 +184,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-
